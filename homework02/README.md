@@ -1,5 +1,5 @@
 # Generate and Read Random Animals
-
+Python scripts to generate random animal json file and print an animal from the generated json file. A new feature has been implemented using argparse to supply index of json file to read from.
 
 ## Usage Instructions
 Use generate_animals.py to general a json file with 20 randomly generated animals. Example usage:
@@ -35,4 +35,5 @@ Run scripts as described in Usage Instructions.
 
 Example:
 ```generate_animals.py```
+
 ```read_animals.py```
