@@ -5,7 +5,7 @@ print(response.status_code)
 print(response.json())
 print(response.headers)
 
-response = requests.get(url="http://localhost:5022/animals/body/dodo")
+response = requests.get(url="http://localhost:5022/animals/body/emu")
 print(response.status_code)
 print(response.json())
 print(response.headers)
