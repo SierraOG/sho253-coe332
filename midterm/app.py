@@ -18,11 +18,15 @@ def get_animals_by_body(body):
    return json.dumps([animal for animal in get_data() if body in animal['body']])
 
 def get_data():
-    return [rd.hgetall(key.decode("utf-8")) for key in rd.keys()]
+   keys = [key.decode("utf-8") for key in rd.keys()]
+   if not keys:
+      start_redis()
+      keys = [key.decode("utf-8") for key in rd.keys()]
+   animals = [rd.hgetall(key) for key in keys]
+   return [rd.hgetall(key.decode("utf-8")) for key in rd.keys()]
 
 def start_redis():
-    generate_animals.main(rd)
+   generate_animals.main(rd)
 
 if __name__ == '__main__':
-    start_redis()
-    app.run(debug=True, host='0.0.0.0')
+   app.run(debug=True, host='0.0.0.0')
