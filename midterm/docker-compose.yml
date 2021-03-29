@@ -3,13 +3,13 @@ version: "3"
 
 services:
     gen-anim:
-        image: sierra_o/json-parser:1.0
+        image: sierrao/midterm:1.0
         volumes:
             - ./test:/data
         user: "872521:816966"
         command: generate_animals.py
     flask-anim:
-        image: sierra_o/json-parser:1.0
+        image: sierrao/midterm:1.0
         volumes:
             - ./test:/data
         user: "872521:816966"
