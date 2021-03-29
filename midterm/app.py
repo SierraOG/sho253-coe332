@@ -36,7 +36,7 @@ def get_animal_by_id(key):
 @app.route('/animals/update/id/<key>/<stats>', methods=['GET'])
 def update_animal_by_id(key):
    rd.hmset(key, json.loads(stats))
-   return f"Successfully updated {key}"
+   return "Successfully updated"
 
 @app.route('/animals/head/<head>', methods=['GET'])
 def get_animals_by_head(head):
