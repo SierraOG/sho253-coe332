@@ -6,7 +6,8 @@ import uuid
 import redis
 from datetime import datetime
 
-def main(rd):
+def main():
+    rd = redis.StrictRedis(host='127.0.0.1', port=6379, db=0)
     heads = ['snake', 'bull', 'lion', 'raven', 'bunny']
     animals = []
     for i in range(20):

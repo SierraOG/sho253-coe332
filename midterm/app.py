@@ -4,11 +4,16 @@ import generate_animals
 import redis
 from datetime import datetime
 app = Flask(__name__)
-rd = redis.StrictRedis(host='127.0.0.1', port=6379, db=7)
+rd = redis.StrictRedis(host='127.0.0.1', port=6379, db=0)
 
 @app.route('/animals', methods=['GET'])
 def get_animals():   
    return json.dumps(get_data())
+
+@app.route('/animals/reset', methods=['GET'])
+def reset_animals():   
+   generate_animals.main()
+   return "Reset"
 
 # With post request
 # @app.route('/animals/id/<key>', methods=['GET', 'POST'])
@@ -70,15 +75,9 @@ def get_total():
 
 def get_data():
    keys = [key.decode("utf-8") for key in rd.keys()]
-   if not keys:
-      start_redis()
-      keys = [key.decode("utf-8") for key in rd.keys()]
    banimals = [rd.hgetall(key) for key in keys]
    animals = [{ y.decode('utf-8'): banimal.get(y).decode('utf-8') for y in banimal.keys() } for banimal in banimals] 
    return animals
-
-def start_redis():
-   generate_animals.main(rd)
 
 if __name__ == '__main__':
    app.run(debug=True, host='0.0.0.0')
