@@ -2,16 +2,18 @@
 version: "3"
 
 services:
-    gen-anim:
-        image: sierrao/midterm:1.0
-        volumes:
-            - ./test:/data
-        user: "872521:816966"
-        command: generate_animals.py
-    flask-anim:
-        image: sierrao/midterm:1.0
-        volumes:
-            - ./test:/data
-        user: "872521:816966"
-        command: flask run
+  flask-anim:
+    build: .
+    container_name: sierrao_web
+    ports:
+      - 5025:5000
+    volumes: 
+      - ./data/data_file.json:/data_file.json
+  redis:
+    image: sierrao/midterm:1.0
+    ports: 
+      - 6405:6379
+    volumes: 
+      - ./config/redis.conf:/redis.conf
+    command: ["redis-server", "/redis.conf"]
 ...

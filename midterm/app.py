@@ -48,14 +48,14 @@ def get_animals_by_body(body):
 
 @app.route('/animals/date/<date1>/<date2>', methods=['GET'])
 def get_animals_by_date(date1, date2):
-   a = datetime.strptime(date1, "%d/%m/%Y")
-   b = datetime.strptime(date2, "%d/%m/%Y")
+   a = datetime.strptime(date1, "%d/%m/%Y-%H:%M:%S")
+   b = datetime.strptime(date2, "%d/%m/%Y-%H:%M:%S")
    return json.dumps([animal for animal in get_data() if a <= datetime.strptime(animal['created_on'], "%d/%m/%Y %H:%M:%S") <= b])
 
 @app.route('/animals/delete/date/<date1>/<date2>', methods=['GET'])
 def delete_animals_by_date(date1, date2):
-   a = datetime.strptime(date1, "%d/%m/%Y")
-   b = datetime.strptime(date2, "%d/%m/%Y")
+   a = datetime.strptime(date1, "%d/%m/%Y-%H:%M:%S")
+   b = datetime.strptime(date2, "%d/%m/%Y-%H:%M:%S")
    for key in rd.keys():
       banimal = rd.hgetall(key)
       animal = { y.decode('utf-8'): banimal.get(y).decode('utf-8') for y in banimal.keys() }
