@@ -13,9 +13,9 @@ def get_animals():
 @app.route('/animals/reset', methods=['GET'])
 def reset_animals():   
    with open("./data/data_file.json", "r") as json_file:
-       animdata = json.load(json_file)['animals']
-       for animal in animdata:
-           rd.hmset(animal['uid'], animal)
+      animdata = json.load(json_file)['animals']
+      for animal in animdata:
+         rd.hmset(animal['uid'], animal)
    return "Reset"
 
 # With post request
