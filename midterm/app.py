@@ -77,11 +77,11 @@ def delete_animals_by_date(date1, date2):
 def get_average(body_part):
    assert body_part == 'legs' or body_part == 'tails' or body_part == 'arms'
    animals = get_data()
-   return sum([num for animal[body_part] in animals])/len(animals)
+   return str(sum([int(animal[body_part]) for animal in animals])/len(animals))
 
 @app.route('/animals/total', methods=['GET'])
 def get_total():
-   return len(get_data())
+   return str(len(get_data()))
 
 def get_data():
    keys = [key.decode("utf-8") for key in rd.keys()]
