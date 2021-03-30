@@ -32,9 +32,6 @@ print(response.headers)
 # Update animal by id
 print("Updating animal by id c7c48301-ec06-46b0-84fa-40bc0d37e90f")
 response = requests.get(url="http://localhost:5025/animals/update/id/c7c48301-ec06-46b0-84fa-40bc0d37e90f/panda/emu-bee/3/6/12")
-print(response.status_code)
-print(response.json())
-print(response.headers)
 
 # Get animals by date range
 print("Getting animals created between 29/03/2021-16:35:25 to 29/03/2021-16:35:28")
