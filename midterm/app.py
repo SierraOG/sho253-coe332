@@ -4,7 +4,7 @@ import generate_animals
 import redis
 from datetime import datetime
 app = Flask(__name__)
-rd = redis.StrictRedis(host='127.0.0.1', port=6379, db=0)
+rd = redis.StrictRedis(host='redis', port=6379, db=0)
 
 @app.route('/animals', methods=['GET'])
 def get_animals():   
@@ -12,7 +12,10 @@ def get_animals():
 
 @app.route('/animals/reset', methods=['GET'])
 def reset_animals():   
-   generate_animals.main()
+   with open("./data/data_file.json", "r") as json_file:
+       animdata = json.load(json_file)['animals']
+       for animal in animdata:
+           rd.hmset(animal['uid'], animal)
    return "Reset"
 
 # With post request
@@ -31,11 +34,18 @@ def reset_animals():
 def get_animal_by_id(key):
    banimal = rd.hgetall(key)
    animal = { y.decode('utf-8'): banimal.get(y).decode('utf-8') for y in banimal.keys() }
-   return json.dump(animal)
+   return json.dumps(animal)
 
-@app.route('/animals/update/id/<key>/<stats>', methods=['GET'])
-def update_animal_by_id(key):
-   rd.hmset(key, json.loads(stats))
+@app.route('/animals/update/id/<key>/<head>/<body>/<arms>/<legs>/<tails>', methods=['GET'])
+def update_animal_by_id(key, head, body, arms, legs, tails):
+   banimal = rd.hgetall(key)
+   animal = { y.decode('utf-8'): banimal.get(y).decode('utf-8') for y in banimal.keys() }
+   animal['head'] = head
+   animal['body'] = body
+   animal['arms'] = arms
+   animal['legs'] = legs
+   animal['tails'] = tails
+   rd.hmset(key, animal)
    return "Successfully updated"
 
 @app.route('/animals/head/<head>', methods=['GET'])
@@ -61,7 +71,7 @@ def delete_animals_by_date(date1, date2):
       animal = { y.decode('utf-8'): banimal.get(y).decode('utf-8') for y in banimal.keys() }
       if a <= datetime.strptime(animal['created_on'], "%d/%m/%Y %H:%M:%S") <= b:
          rd.delete(key) 
-   return f"Successfully deleted animals between {date1} and {date2}"
+   return "Successfully deleted animals"
 
 @app.route('/animals/average/<body_part>', methods=['GET'])
 def get_average(body_part):

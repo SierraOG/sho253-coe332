@@ -22,15 +22,7 @@ print(response.json())
 print(response.headers)
 
 # Update animal by id
-response = requests.get(url="""http://localhost:5025/animals/update/id/c7c48301-ec06-46b0-84fa-40bc0d37e90f/{
-            "uid": "c7c48301-ec06-46b0-84fa-40bc0d37e90f",
-            "head": "panda",
-            "body": "jennet-bee",
-            "arms": 3,
-            "legs": 6,
-            "tails": 12,
-            "created_on": "29/03/2021 16:35:16"
-        }""")
+response = requests.get(url="http://localhost:5025/animals/update/id/c7c48301-ec06-46b0-84fa-40bc0d37e90f/panda/emu-bee/3/6/12")
 print(response.status_code)
 print(response.json())
 print(response.headers)
