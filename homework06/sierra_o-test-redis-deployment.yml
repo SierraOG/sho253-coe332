@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sierra_o-test-redis-deployment
+  labels:
+    username: sierra_o
+    env: test
+    app: sierra_o-test-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      username: sierra_o
+      env: test
+      app: sierra_o-test-redis
+  template:
+    metadata:
+      labels:
+        username: sierra_o
+        env: test
+        app: sierra_o-test-redis
+    spec:
+      containers:
+        - name: sierra_o-test-redis
+          image: redis:5.0.0
+          volumeMounts:
+          - name: sierra_o-test-data
+            mountPath: "/data"
+      volumes:
+      - name: sierra_o-test-data
+        persistentVolumeClaim:
+          claimName: sierra_o-test-data
