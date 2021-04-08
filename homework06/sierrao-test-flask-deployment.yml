@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sierrao-test-flask-deployment
+  labels:
+    username: sierrao
+    env: test
+    app: sierrao-test-flask
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      username: sierrao
+      env: test
+      app: sierrao-test-flask
+  template:
+    metadata:
+      labels:
+        username: sierrao
+        env: test
+        app: sierrao-test-flask
+    spec:
+      containers:
+        - name: sierrao-test-flask
+          imagePullPolicy: Always
+          image: sierrao/test-flask
+          env:
+            - name: FLASK_APP
+              value: "app.py"
+          ports:
+            - name: http
+              containerPort: 5000
+          volumeMounts:
+          - name: sierrao-test-data
+            mountPath: "/data"
+      volumes:
+      - name: sierrao-test-data
+        persistentVolumeClaim:
+          claimName: sierrao-test-data
