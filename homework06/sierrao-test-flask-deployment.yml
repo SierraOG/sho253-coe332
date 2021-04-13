@@ -24,7 +24,7 @@ spec:
       containers:
         - name: sierrao-test-flask
           imagePullPolicy: Always
-          image: sierrao/test-flask
+          image: sierrao/sierrao-test-flask
           env:
             - name: FLASK_APP
               value: "app.py"
