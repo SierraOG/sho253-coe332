@@ -28,13 +28,8 @@ spec:
           env:
             - name: FLASK_APP
               value: "app.py"
+            - name: REDIS_IP
+              value: '10.96.134.73'
           ports:
             - name: http
               containerPort: 5000
-          volumeMounts:
-          - name: sierrao-test-data
-            mountPath: "/data"
-      volumes:
-      - name: sierrao-test-data
-        persistentVolumeClaim:
-          claimName: sierrao-test-data
